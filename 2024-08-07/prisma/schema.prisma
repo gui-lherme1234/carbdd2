@@ -1,0 +1,46 @@
+datasource db {
+provider = "mysql"
+url = env("DATABASE_URL")
+}
+
+generator client {
+provider = "prisma-client-js"
+}
+
+model Music {
+id Int @id @default(autoincrement())
+title String @db.VarChar(100)
+artists String @db.VarChar(255)
+album String? @db.VarChar(255)
+genres String @db.VarChar(255)
+isSingle Boolean
+releaseYear Int @db.Year
+duration String @db.VarChar(10) 
+}
+
+model User {
+id BigInt @id @default(autoincrement())
+name String @db.VarChar(255)
+username String @unique @db.VarChar(255)
+type UserType
+email String @unique @db.VarChar(255)
+password String @db.VarChar(255)
+birthDate DateTime @db.Date
+registrationDate DateTime @default(now())
+}
+
+model Product {
+id Int @id @default(autoincrement()) @db.MediumInt
+name String @db.VarChar(255)
+description String @db.Text
+price Decimal @db.Decimal(10, 2) 
+stock Int @default(0) @db.SmallInt
+rating Decimal @db.Decimal(2, 1) 
+registrationDate DateTime @default(now())
+}
+
+enum UserType {
+USER
+ADMIN
+}
+
